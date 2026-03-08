@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jira Test Case Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#0052CC"/>
+                    <path d="M2 17L12 22L22 17" stroke="#0052CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#0052CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Test Management</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li><a href="#">Test Cycles</a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="breadcrumb">Projects / <span class="project-name">TEST-QA</span></div>
+                <div class="actions">
+                    <button id="create-btn" class="btn btn-primary">Create</button>
+                    <button id="export-btn" class="btn btn-secondary">Export to Excel</button>
+                </div>
+            </header>
+
+            <section class="dashboard">
+                <h1>Test Cases</h1>
+                <div class="table-container">
+                    <table id="test-case-table">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Summary</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="test-case-list">
+                            <!-- Test cases will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Create Modal -->
+    <div id="create-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Create Test Case</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="test-case-form">
+                <input type="hidden" id="edit-index" value="-1">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="createdBy">Created BY *</label>
+                        <input type="text" id="createdBy" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="To Do">To Do</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="caseId">Test Case ID *</label>
+                        <input type="text" id="caseId" required placeholder="e.g. TC-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority">
+                            <option value="High">High</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="summary">Test Case Title (Summary) *</label>
+                    <input type="text" id="summary" required placeholder="e.g. Verify Login Functionality">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Detailed description of the test..."></textarea>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="preconditions">Preconditions</label>
+                        <textarea id="preconditions" placeholder="e.g. User is not logged in..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="testData">Test Data</label>
+                        <textarea id="testData" placeholder="e.g. username: testuser, password: password123"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="steps">Test Case Steps *</label>
+                    <textarea id="steps" required placeholder="1. Open browser&#10;2. Navigate to URL..."></textarea>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="expected">Expected Result *</label>
+                        <textarea id="expected" required placeholder="User should be logged in"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="actual">Actual Result</label>
+                        <textarea id="actual" placeholder="Leave blank if not executed yet"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-text close-modal">Cancel</button>
+                    <button type="submit" id="submit-btn" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
